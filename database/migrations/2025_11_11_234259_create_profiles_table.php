@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->string('avatar')->nullable();
-            $table->enum('userType', ['individual', 'business', 'household']);
+            $table->enum('userType', ['individual', 'business', 'household'])->nullable();
             $table->string('pickupLocation')->nullable();
             $table->timestamps();
         });
