@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/profile', [ProfileController::class, 'store']);
+    Route::post('/profile/avatar', [ProfileController::class, 'uploadAvatar']);
     // Route::post('/profile', [ProfileController::class, 'update']);
 
     Route::post('/pickups', [PickupController::class, 'store']);
