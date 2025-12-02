@@ -93,4 +93,30 @@ class ProfileController extends Controller
     //         'profile' => $profile
     //     ]);
     // }
+
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = $request->user();
+
+        // FIX IS HERE: Use $request, not $user
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+
+            $user->profile()->updateOrCreate(
+                ['user_id' => $user->id],
+                ['avatar' => $path]
+            );
+
+            return response()->json([
+                'message' => 'Avatar uploaded successfully',
+                'avatar_url' => asset('storage/' . $path),
+            ], 200);
+        }
+
+        return response()->json(['message' => 'No file uploaded'], 400);
+    }
 }
